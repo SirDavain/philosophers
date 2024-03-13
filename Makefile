@@ -7,7 +7,7 @@ SRC = $(SRC_DIR)/main.c
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -pthread -g
 
 all: $(NAME)
 
