@@ -6,23 +6,26 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:33 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/06 16:52:25 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:17:27 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	create_philos(t_philo philos)
+void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks)
 {
 	int	i;
-	pthread_t	var;
 
 	i = 1;
-	while (i <= philos.nbr_of_philos)
+	while (i <= philos->nbr_of_philos)
 	{
-		/*create philo-threads
-		pthread_create 
-		*/
+		philos[i].id = i;
+		philos[i].meals_eaten = 0;
+		philos[i].eating = FALSE;
+		philos[i].start_time = get_current_time();
+		philos[i].last_meal = get_current_time();
+		philos[i].
+		i++;
 	}
 }
 
@@ -34,16 +37,24 @@ void	is_eating()
 	 */
 }
 
-void	init_program(t_philo philos, char *nbr_of_philos)
+void	init_forks(pthread_mutex_t *forks, t_philo *philos)
 {
-	philos.is_dead_flag = FALSE;
-	philos.nbr_of_philos = ft_atoi(nbr_of_philos);
-	pthread_mutex_init(&)
+	int	i;
+
+	i = 0;
+	while (i < philos->nbr_of_philos)
+	{
+		pthread_mutex_init(&forks[i], NULL);
+		i++;
+	}
 }
 
-void	ft_usleep()
+void	init_program(t_data *data)
 {
-	
+	data->is_dead_flag = FALSE;
+	pthread_mutex_init(&data->meal_lock, NULL);
+	pthread_mutex_init(&data->dead_lock, NULL);
+	pthread_mutex_init(&data->write_lock, NULL);
 }
 
 void	state_change()
@@ -85,43 +96,40 @@ int	check_arg_nbrs(char *str)
 	}
 	return (0);
 }
-int	check_args(char **argv, t_philo philos)
+int	check_args(char **argv, t_philo *philos)
 {
 	if (ft_atoi(argv[1]) > MAX_PHILOS || ft_atoi(argv[1]) <= 0 || \
 		check_arg_nbrs(argv[1]) == 1)
 		return (printf("Invalid number of philosophers."), 1);
-	else
-		philos.nbr_of_philos = ft_atoi(argv[1]);
+	philos->nbr_of_philos = ft_atoi(argv[1]);
 	if (ft_atoi(argv[2]) <= 0 || check_arg_nbrs(argv[2]) == 1)
 		return (printf("Invalid time to die."), 1);
-	else
-		philos.time_to_die = ft_atoi(argv[2]);
+	philos->time_to_die = ft_atoi(argv[2]);
 	if (ft_atoi(argv[3]) <= 0 || check_arg_nbrs(argv[3]) == 1)
 		return (printf("Invalid time to eat."), 1);
-	else
-		philos.time_to_eat = ft_atoi(argv[3]);
+	philos->time_to_eat = ft_atoi(argv[3]);
 	if (ft_atoi(argv[4]) <= 0 || check_arg_nbrs(argv[4]) == 1)
 		return (printf("Invalid time to sleep."), 1);
-	else
-		philos.time_to_sleep = ft_atoi(argv[4]);
+	philos->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5] && (ft_atoi(argv[5]) <= 0 || check_arg_nbrs(argv[5]) == 1))
 		return (printf("Invalid nbr of times each philosopher must eat."), 1);
-	else if (argv[5] && !(ft_atoi(argv[5]) <= 0 || check_arg_nbrs(argv[5]) == 1))
-		philos.max_nbr_of_meals = ft_atoi(argv[5]);
+	if (argv[5] && !(ft_atoi(argv[5]) <= 0 || check_arg_nbrs(argv[5]) == 1))
+		philos->max_nbr_of_meals = ft_atoi(argv[5]);
 }
 
 int	main(int argc, char **argv)
 {
-	t_philo	philos;
+	t_philo	philos[MAX_PHILOS];
 	t_data	data;
 	pthread_mutex_t forks[MAX_PHILOS];
 	
 	if (argc != 5 || argc != 6)
 		return (1);
-	if (check_args(argv, philos) == 1)
+	if (check_args(argv, &philos) == 1)
 		return (1);
-	init_program(philos, argv[1]);
-	create_philos(philos);
-	philo_loop(data);
+	init_program(&data);
+	init_forks(forks, &philos);
+	create_philos(philos, &data, forks);
+	philo_loop(&data);
 	return (0);
 }

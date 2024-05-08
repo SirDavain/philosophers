@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:42:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/06 16:35:16 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/08 15:16:38 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,21 @@
 
 typedef struct s_philo
 {
-	int		id;
-	int		meals_eaten;
-	size_t	nbr_of_philos;
-	size_t	time_to_die;
-	size_t	time_to_eat;
-	size_t	time_to_sleep;
-	size_t	max_nbr_of_meals;
-	size_t	r_fork;
-	size_t	l_fork;	
+	int				id;
+	int				eating;
+	int				meals_eaten;
+	size_t			nbr_of_philos;
+	size_t			start_time;
+	size_t			last_meal;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	size_t			max_nbr_of_meals;
+	pthread_mutex_t *r_fork;
+	pthread_mutex_t *l_fork;
+	pthread_mutex_t	*dead_lock;
+	pthread_mutex_t	*meal_lock;
+	pthread_mutex_t	*write_lock;
 }				t_philo;
 
 typedef struct s_data
@@ -41,6 +47,7 @@ typedef struct s_data
 	int				is_dead_flag;
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	write_lock;
 	t_philo			*philos;
 }				t_data;
 
