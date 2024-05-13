@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:42:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/08 15:16:38 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/09 11:35:01 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_philo
 	int				id;
 	int				eating;
 	int				meals_eaten;
+	int				is_dead;
 	size_t			nbr_of_philos;
 	size_t			start_time;
 	size_t			last_meal;

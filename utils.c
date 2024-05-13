@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:28:15 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/08 15:07:47 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/12 10:59:41 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ int	ft_usleep(size_t milliseconds)
 	return (0);
 }
 
-void	stop_program(t_philo *philos, t_data *data)
+void	terminate_program(char *str, t_data *data, pthread_mutex_t *forks)
 {
+	if (str)
+		printf("Error: %s \n", str);
 	
 }
