@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:42:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/09 11:35:01 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/13 16:05:20 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 typedef struct s_philo
 {
 	int				id;
-	int				eating;
+	int				is_eating;
 	int				meals_eaten;
-	int				is_dead;
+	int				*is_dead;
 	size_t			nbr_of_philos;
 	size_t			start_time;
 	size_t			last_meal;
@@ -36,6 +36,7 @@ typedef struct s_philo
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
 	size_t			max_nbr_of_meals;
+	pthread_t		threads;
 	pthread_mutex_t *r_fork;
 	pthread_mutex_t *l_fork;
 	pthread_mutex_t	*dead_lock;
@@ -56,6 +57,9 @@ typedef struct s_data
 
 
 //Utils
-int	ft_atoi(char *s);
+int		ft_atoi(char *s);
+size_t	get_current_time(void);
+int		ft_usleep(size_t milliseconds);
+void	terminate_program(char *str, t_data *data, pthread_mutex_t *forks);
 
 #endif

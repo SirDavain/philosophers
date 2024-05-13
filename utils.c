@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:28:15 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/12 10:59:41 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/13 15:05:19 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,27 @@ int	ft_usleep(size_t milliseconds)
 
 void	terminate_program(char *str, t_data *data, pthread_mutex_t *forks)
 {
+	int	i;
+
 	if (str)
-		printf("Error: %s \n", str);
-	
+		printf("%s \n", str);
+	pthread_mutex_destroy(&data->dead_lock);
+	pthread_mutex_destroy(&data->write_lock);
+	pthread_mutex_destroy(&data->meal_lock);
+	i = 0;
+	while (i < data->philos[0].nbr_of_philos)
+	{
+		pthread_mutex_destroy(&forks[i]);
+		i++;
+	}
+}
+
+void	print_state(char *str, t_philo *philo, int id)
+{
+	size_t	time;
+	pthread_mutex_lock(philo->write_lock);
+	time = get_current_time() - philo->start_time;
+	if (!dead_checker(philo))
+		printf("%zu %d %s \n", time, id, str);
+	pthread_mutex_unlock(philo->write_lock);
 }
