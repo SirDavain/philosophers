@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:28:15 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/13 15:05:19 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/16 10:59:58 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	terminate_program(char *str, t_data *data, pthread_mutex_t *forks)
 	}
 }
 
-void	print_state(char *str, t_philo *philo, int id)
+void	print_status(char *str, t_philo *philo, int id)
 {
 	size_t	time;
 	pthread_mutex_lock(philo->write_lock);

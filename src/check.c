@@ -6,13 +6,50 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:10:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/13 14:54:30 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/20 18:18:34 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	death_checker(t_philo *philos)
+int	check_if_all_ate(t_philo *philos)
+{
+	int	i;
+	int	done_eating;
+
+	if (philos[0].nbr_of_meals == -1)
+		return (0);
+	i = 0;
+	done_eating = 0;
+	while (i < philos[0].nbr_of_philos)
+	{
+		pthread_mutex_lock(philos->meal_lock);
+		if (philos[i].meals_eaten >= philos[i].nbr_of_meals)
+			done_eating++;
+		pthread_mutex_unlock(philos->meal_lock);
+		i++;
+	}
+	if (done_eating == philos[0].nbr_of_philos)
+	{
+		pthread_mutex_lock(philos[0].dead_lock);
+		*philos->is_dead = TRUE;
+		pthread_mutex_unlock(philos[0].dead_lock);
+		return (1);
+	}
+	return (0);
+}
+
+int	check_if_dead(t_philo *philo, size_t time_to_die)
+{
+	pthread_mutex_lock(&philo->meal_lock);
+	if (get_current_time() - philo->last_meal >= time_to_die \
+		&& philo->eating == 0)
+		return (pthread_mutex_unlock(&philo->meal_lock), 1);
+	pthread_mutex_unlock(&philo->meal_lock);
+	return (0);
+}
+
+int	death_flag_checker(t_philo *philos)
 {
 	pthread_mutex_lock(philos->dead_lock);
 	if (philos->is_dead == 1)
@@ -53,5 +90,7 @@ int	check_args(char **argv, t_philo *philos)
 	if (argv[5] && (ft_atoi(argv[5]) <= 0 || check_arg_nbrs(argv[5]) == 1))
 		return (printf("Invalid nbr of times each philosopher must eat."), 1);
 	if (argv[5] && !(ft_atoi(argv[5]) <= 0 || check_arg_nbrs(argv[5]) == 1))
-		philos->max_nbr_of_meals = ft_atoi(argv[5]);
+		philos->nbr_of_meals = ft_atoi(argv[5]);
+	if (!argv[5])
+		philos->nbr_of_meals = -1;
 }
