@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:10:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/22 08:13:56 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:42:40 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	check_arg_nbrs(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[1] < '0' || str[i] > '9')
+		if (str[i] < '0' || str[i] > '9')
 			return (1);
 		i++;
 	}

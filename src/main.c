@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:33 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/22 08:22:46 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:54:11 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks)
 
 int	main(int argc, char **argv)
 {
-	t_philo	philos[MAX_PHILOS];
-	t_data	data;
-	pthread_mutex_t forks[MAX_PHILOS];
-	
+	t_philo			philos[MAX_PHILOS];
+	t_data			data;
+	pthread_mutex_t	forks[MAX_PHILOS];
+
 	if (argc != 5 && argc != 6)
-		return (printf("ERROR\n"),1);
+		return (printf("Not the right amount of arguments.\n"), 1);
 	if (check_args(argv, philos) == 1)
 		return (1);
 	init_program(&data);

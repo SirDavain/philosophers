@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:28:15 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/22 08:21:47 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:47:25 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_atoi(char *s)
 	int	i;
 	int	nbr;
 	int	sign;
-	
+
 	i = 0;
 	nbr = 0;
 	sign = 1;
@@ -74,6 +74,7 @@ void	terminate_program(char *str, t_data *data, pthread_mutex_t *forks)
 void	print_status(char *str, t_philo *philo, int id)
 {
 	size_t	time;
+
 	pthread_mutex_lock(philo->write_lock);
 	time = get_current_time() - philo->start_time;
 	if (!death_flag_checker(philo))

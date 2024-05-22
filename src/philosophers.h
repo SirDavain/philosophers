@@ -6,12 +6,12 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:42:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/22 08:09:47 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:54:19 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
- #define PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -38,8 +38,8 @@ typedef struct s_philo
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
 	pthread_t		threads;
-	pthread_mutex_t *r_fork;
-	pthread_mutex_t *l_fork;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*dead_lock;
 	pthread_mutex_t	*meal_lock;
 	pthread_mutex_t	*write_lock;
