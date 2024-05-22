@@ -6,14 +6,15 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:42:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/20 18:21:28 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/22 08:09:47 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSPHERS_H
+#ifndef PHILOSOPHERS_H
  #define PHILOSOPHERS_H
 
 # include <stdio.h>
+# include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
 # include <string.h>
@@ -29,13 +30,13 @@ typedef struct s_philo
 	int				is_eating;
 	int				meals_eaten;
 	int				*is_dead;
-	size_t			nbr_of_philos;
+	int				nbr_of_philos;
+	int				nbr_of_meals;
 	size_t			start_time;
 	size_t			last_meal;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
-	size_t			nbr_of_meals;
 	pthread_t		threads;
 	pthread_mutex_t *r_fork;
 	pthread_mutex_t *l_fork;
@@ -55,6 +56,7 @@ typedef struct s_data
 
 //main.c
 int		philo_is_dead(t_philo *philo);
+void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks);
 int		main(int argc, char **argv);
 
 //routine.c
@@ -79,7 +81,6 @@ int		check_arg_nbrs(char *str);
 int		check_args(char **argv, t_philo *philos);
 
 //init.c
-void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks);
 int		init_threads(t_data *data, pthread_mutex_t *forks);
 void	init_forks(pthread_mutex_t *forks, t_philo *philos);
 void	init_program(t_data *data);

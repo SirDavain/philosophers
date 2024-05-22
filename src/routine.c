@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 09:05:27 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/20 18:21:07 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/22 08:14:28 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	eating(t_philo *philos)
 
 void	thinking(t_philo *philos)
 {
-	print_state("is thinking", philos, philos->id);
+	print_status("is thinking", philos, philos->id);
 }
 
 void	sleeping(t_philo *philos)
 {
-	print_state("is sleeping", philos, philos->id);
+	print_status("is sleeping", philos, philos->id);
 	ft_usleep(philos->time_to_sleep);
 }
 

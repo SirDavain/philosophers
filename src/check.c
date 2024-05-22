@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:10:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/20 18:18:34 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/05/22 08:13:56 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ int	check_if_all_ate(t_philo *philos)
 
 int	check_if_dead(t_philo *philo, size_t time_to_die)
 {
-	pthread_mutex_lock(&philo->meal_lock);
-	if (get_current_time() - philo->last_meal >= time_to_die \
-		&& philo->eating == 0)
-		return (pthread_mutex_unlock(&philo->meal_lock), 1);
-	pthread_mutex_unlock(&philo->meal_lock);
+	pthread_mutex_lock(philo->meal_lock);
+	if ((get_current_time() - philo->last_meal >= time_to_die) \
+		&& (philo->is_eating == FALSE))
+		return (pthread_mutex_unlock(philo->meal_lock), 1);
+	pthread_mutex_unlock(philo->meal_lock);
 	return (0);
 }
 
 int	death_flag_checker(t_philo *philos)
 {
 	pthread_mutex_lock(philos->dead_lock);
-	if (philos->is_dead == 1)
+	if (philos->is_dead)
 		return (pthread_mutex_unlock(philos->dead_lock), 1);
 	pthread_mutex_unlock(philos->dead_lock);
 	return (0);
@@ -93,4 +93,5 @@ int	check_args(char **argv, t_philo *philos)
 		philos->nbr_of_meals = ft_atoi(argv[5]);
 	if (!argv[5])
 		philos->nbr_of_meals = -1;
+	return (0);
 }

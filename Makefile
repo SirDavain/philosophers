@@ -1,18 +1,19 @@
 NAME = philo
 
-SRC_DIR = ./src
 OBJ_DIR = ./obj
 
-SRC = $(SRC_DIR)/main.c $(SRC_DIR)/utils.c $(SRC_DIR)/init.c $(SRC_DIR)/check.c
+SRC = main.c utils.c init.c check.c routine.c
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+SRC_DIR = $(addprefix ./src/, $(SRC))
+HEADER = src/philosophers.h
 
-CC = cc
+#CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread -g
 
 all: $(NAME)
 
-NAME: $(SRC_DIR)/%.c philosophers.h
-	@cc $(CFLAGS) -o 
+$(NAME): $(SRC_DIR) $(HEADER)
+	@cc $(CFLAGS) -o $(NAME) $(SRC_DIR)
 
 #$(NAME): $(OBJ)
 #	$(CC) $^ -o $(NAME)
