@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:28:15 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/22 15:47:25 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/04 07:49:41 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_usleep(size_t milliseconds)
 	return (0);
 }
 
-void	terminate_program(char *str, t_data *data, pthread_mutex_t *forks)
+void	quit_philos(char *str, t_data *data, pthread_mutex_t *forks)
 {
 	int	i;
 

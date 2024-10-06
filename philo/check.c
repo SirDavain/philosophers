@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:10:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/05/22 15:42:40 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/06 07:53:40 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_if_all_ate(t_philo *philos)
 	int	i;
 	int	done_eating;
 
-	if (philos[0].nbr_of_meals == -1)
+	if (philos[0].nbr_of_meals == -42)
 		return (0);
 	i = 0;
 	done_eating = 0;
@@ -32,7 +32,7 @@ int	check_if_all_ate(t_philo *philos)
 	if (done_eating == philos[0].nbr_of_philos)
 	{
 		pthread_mutex_lock(philos[0].dead_lock);
-		*philos->is_dead = TRUE;
+		*philos->is_dead = true;
 		pthread_mutex_unlock(philos[0].dead_lock);
 		return (1);
 	}
@@ -43,10 +43,9 @@ int	check_if_dead(t_philo *philo, size_t time_to_die)
 {
 	pthread_mutex_lock(philo->meal_lock);
 	if ((get_current_time() - philo->last_meal >= time_to_die) \
-		&& (philo->is_eating == FALSE))
+		&& (philo->is_eating == false))
 		return (pthread_mutex_unlock(philo->meal_lock), 1);
-	pthread_mutex_unlock(philo->meal_lock);
-	return (0);
+	return (pthread_mutex_unlock(philo->meal_lock), 0);
 }
 
 int	death_flag_checker(t_philo *philos)
@@ -54,8 +53,7 @@ int	death_flag_checker(t_philo *philos)
 	pthread_mutex_lock(philos->dead_lock);
 	if (philos->is_dead)
 		return (pthread_mutex_unlock(philos->dead_lock), 1);
-	pthread_mutex_unlock(philos->dead_lock);
-	return (0);
+	return (pthread_mutex_unlock(philos->dead_lock), 0);
 }
 
 int	check_arg_nbrs(char *str)
@@ -72,7 +70,7 @@ int	check_arg_nbrs(char *str)
 	return (0);
 }
 
-int	check_args(char **argv, t_philo *philos)
+int	args_error(char **argv, t_philo *philos)
 {
 	if (ft_atoi(argv[1]) > MAX_PHILOS || ft_atoi(argv[1]) <= 0 || \
 		check_arg_nbrs(argv[1]) == 1)
@@ -87,11 +85,13 @@ int	check_args(char **argv, t_philo *philos)
 	if (ft_atoi(argv[4]) <= 0 || check_arg_nbrs(argv[4]) == 1)
 		return (printf("Invalid time to sleep."), 1);
 	philos->time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5] && (ft_atoi(argv[5]) <= 0 || check_arg_nbrs(argv[5]) == 1))
-		return (printf("Invalid nbr of times each philosopher must eat."), 1);
-	if (argv[5] && !(ft_atoi(argv[5]) <= 0 || check_arg_nbrs(argv[5]) == 1))
+	if (argv[5])
+	{
+		if (ft_atoi(argv[5]) <= 0 || check_arg_nbrs(argv[5]) == 1)
+			return (printf("Invalid nbr of times each philosopher must eat."), 1);
 		philos->nbr_of_meals = ft_atoi(argv[5]);
+	}
 	if (!argv[5])
-		philos->nbr_of_meals = -1;
+		philos->nbr_of_meals = -42;
 	return (0);
 }
