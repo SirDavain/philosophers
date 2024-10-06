@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:56:20 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/06 08:00:07 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/06 12:59:23 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	create_threads(t_data *data, pthread_mutex_t *forks)
 	if (pthread_create(&monitor, NULL, &monitor_routine, data->philos) != 0)
 		quit_philos("Error: Thread creation", data, forks);
 	i = -1;
-	while (++i < data->philos->nbr_of_philos)
+	while (++i < data->philos[0].nbr_of_philos)
 	{
 		if (pthread_create(&data->philos[i].threads, NULL, &philo_routine, \
 			&data->philos[i]) != 0)

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:33 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/06 07:59:49 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/06 12:54:36 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks)
 
 int	main(int argc, char **argv)
 {
-	t_philo			philos[MAX_PHILOS];
 	t_data			data;
+	t_philo			philos[MAX_PHILOS];
 	pthread_mutex_t	forks[MAX_PHILOS];
 
 	if (argc != 5 && argc != 6)
