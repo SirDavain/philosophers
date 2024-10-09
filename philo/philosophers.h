@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:42:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/08 15:12:13 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/09 14:30:25 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 
 typedef struct s_philo
 {
+	bool			is_eating;
 	int				*is_dead;
 	int				id;
-	int				is_eating;
 	int				meals_eaten;
 	int				nbr_of_philos;
 	int				nbr_of_meals;
@@ -56,7 +56,6 @@ typedef struct s_data
 
 //main.c
 int		philo_is_dead(t_philo *philo);
-void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks);
 int		main(int argc, char **argv);
 
 //routine.c
@@ -69,7 +68,7 @@ void	*philo_routine(void *ptr);
 //utils.c
 int		ft_atoi(char *s);
 size_t	get_current_time(void);
-int		ft_usleep(size_t milliseconds);
+int		ft_sleep(size_t milliseconds);
 void	quit_philos(char *str, t_data *data, pthread_mutex_t *forks);
 void	print_status(char *str, t_philo *philo, int id);
 
@@ -82,6 +81,8 @@ int		args_error(char **argv, t_philo *philos);
 
 //init.c
 int		create_threads(t_data *data, pthread_mutex_t *forks);
-void	ft_init(t_data *data, t_philo *philos, pthread_mutex_t *forks);
+void	ft_init(t_data *data, t_philo *philos, pthread_mutex_t *forks, char **argv);
+void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks, char **argv);
+void	init_philo_input(t_philo *philos, char **argv);
 
 #endif

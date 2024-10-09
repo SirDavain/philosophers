@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:56:20 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/08 15:12:44 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/09 14:57:45 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	create_threads(t_data *data, pthread_mutex_t *forks)
 				&data->philos[i]) != 0)
 			return (1);
 	}
+	printf("Is Dead Flag: %d\n", data->is_dead);
 	i = -1;
 	if (pthread_join(monitor, NULL) != 0)
 		return (1);
@@ -37,7 +38,46 @@ int	create_threads(t_data *data, pthread_mutex_t *forks)
 	return (0);
 }
 
-void	ft_init(t_data *data, t_philo *philos, pthread_mutex_t *forks)
+void	init_philo_input(t_philo *philos, char **argv)
+{
+	philos->nbr_of_philos = ft_atoi(argv[1]);
+	philos->time_to_die = ft_atoi(argv[2]);
+	philos->time_to_eat = ft_atoi(argv[3]);
+	philos->time_to_sleep = ft_atoi(argv[4]);
+	if (ft_atoi(argv[5]) <= 0 || !is_valid_nbr(argv[5]))
+		philos->nbr_of_meals = ft_atoi(argv[5]);
+	else
+		philos->nbr_of_meals = -42;
+}
+
+void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks,
+						char **argv)
+{
+	int	i;
+
+	i = -1;
+	while (++i < ft_atoi(argv[1]))
+	{
+		philos[i].id = i + 1;
+		init_philo_input(&philos[i], argv);
+		philos[i].meals_eaten = 0;
+		philos[i].is_eating = false;
+		philos[i].start_time = get_current_time();
+		philos[i].last_meal = get_current_time();
+		philos[i].dead_lock = &data->dead_lock;
+		philos[i].meal_lock = &data->meal_lock;
+		philos[i].write_lock = &data->write_lock;
+		philos[i].is_dead = &data->is_dead;
+		philos[i].r_fork = &forks[i];
+		if (i == 0)
+			philos[i].l_fork = &forks[philos->nbr_of_philos - 1];
+		else
+			philos[i].l_fork = &forks[i - 1];
+	}
+}
+
+void	ft_init(t_data *data, t_philo *philos, pthread_mutex_t *forks,
+				char **argv)
 {
 	int	i;
 
@@ -47,6 +87,6 @@ void	ft_init(t_data *data, t_philo *philos, pthread_mutex_t *forks)
 	pthread_mutex_init(&data->dead_lock, NULL);
 	pthread_mutex_init(&data->write_lock, NULL);
 	i = -1;
-	while (++i < philos->nbr_of_philos)
+	while (++i < ft_atoi(argv[1]))
 		pthread_mutex_init(&forks[i], NULL);
 }
