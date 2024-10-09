@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:33 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/06 12:54:36 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/09 06:35:52 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	philo_is_dead(t_philo *philo)
 {
 	int	i;
 
-	i = 0;
-	while (i < philo[0].nbr_of_philos)
+	i = -1;
+	while (++i < philo[0].nbr_of_philos)
 	{
 		if (check_if_dead(&philo[i], philo[i].time_to_die))
 		{
@@ -27,7 +27,6 @@ int	philo_is_dead(t_philo *philo)
 			pthread_mutex_unlock(philo[0].dead_lock);
 			return (1);
 		}
-		i++;
 	}
 	return (0);
 }
@@ -63,13 +62,13 @@ int	main(int argc, char **argv)
 	pthread_mutex_t	forks[MAX_PHILOS];
 
 	if (argc != 5 && argc != 6)
-		return (printf("Not the right amount of arguments.\n"), 1);
+		return (printf("Error: Not the right amount of arguments.\n"), 1);
 	if (args_error(argv, philos))
-		return (1);
-	init_program(&data);
-	init_forks(forks, philos);
+		return (printf("Error: Invalid argument found\n"), 1);
+	ft_init(&data, philos, forks);
 	create_philos(philos, &data, forks);
-	create_threads(&data, forks);
+	if (create_threads(&data, forks) == 1)
+		return (quit_philos("Thread error", &data, forks), 1);
 	quit_philos("Everyone survived", &data, forks);
 	return (0);
 }

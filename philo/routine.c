@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 09:05:27 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/04 11:26:52 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/08 15:12:50 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*philo_routine(void *ptr)
 {
 	t_philo	*philo;
 
-	philo = (void *)ptr;
+	philo = (t_philo *)ptr;
 	if (philo->id % 2 == 0)
 		ft_usleep(1);
 	while (!death_flag_checker(philo))

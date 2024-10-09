@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:42:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/06 07:59:54 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/08 15:12:13 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <sys/time.h>
 # include <stdbool.h>
+# include <limits.h>
 
 # define MAX_PHILOS 200
 
@@ -76,12 +77,11 @@ void	print_status(char *str, t_philo *philo, int id);
 int		death_flag_checker(t_philo *philos);
 int		check_if_dead(t_philo *philo, size_t time_to_die);
 int		check_if_all_ate(t_philo *philos);
-int		check_arg_nbrs(char *str);
+int		is_valid_nbr(char *str);
 int		args_error(char **argv, t_philo *philos);
 
 //init.c
 int		create_threads(t_data *data, pthread_mutex_t *forks);
-void	init_forks(pthread_mutex_t *forks, t_philo *philos);
-void	init_program(t_data *data);
+void	ft_init(t_data *data, t_philo *philos, pthread_mutex_t *forks);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:10:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/06 07:53:40 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/08 15:14:53 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,39 +56,43 @@ int	death_flag_checker(t_philo *philos)
 	return (pthread_mutex_unlock(philos->dead_lock), 0);
 }
 
-int	check_arg_nbrs(char *str)
+int	is_valid_nbr(char *str)
 {
-	int	i;
+	int		i;
+	long	n;
 
+	n = ft_atoi(str);
+	if (n > INT_MAX)
+		return (0);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	args_error(char **argv, t_philo *philos)
 {
-	if (ft_atoi(argv[1]) > MAX_PHILOS || ft_atoi(argv[1]) <= 0 || \
-		check_arg_nbrs(argv[1]) == 1)
-		return (printf("Invalid number of philosophers."), 1);
+	if (ft_atoi(argv[1]) > MAX_PHILOS || ft_atoi(argv[1]) <= 0
+		|| !is_valid_nbr(argv[1]))
+		return (1);
 	philos->nbr_of_philos = ft_atoi(argv[1]);
-	if (ft_atoi(argv[2]) <= 0 || check_arg_nbrs(argv[2]) == 1)
-		return (printf("Invalid time to die."), 1);
+	if (ft_atoi(argv[2]) <= 0 || !is_valid_nbr(argv[2]))
+		return (1);
 	philos->time_to_die = ft_atoi(argv[2]);
-	if (ft_atoi(argv[3]) <= 0 || check_arg_nbrs(argv[3]) == 1)
-		return (printf("Invalid time to eat."), 1);
+	if (ft_atoi(argv[3]) <= 0 || !is_valid_nbr(argv[3]))
+		return (1);
 	philos->time_to_eat = ft_atoi(argv[3]);
-	if (ft_atoi(argv[4]) <= 0 || check_arg_nbrs(argv[4]) == 1)
-		return (printf("Invalid time to sleep."), 1);
+	if (ft_atoi(argv[4]) <= 0 || !is_valid_nbr(argv[4]))
+		return (1);
 	philos->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
 	{
-		if (ft_atoi(argv[5]) <= 0 || check_arg_nbrs(argv[5]) == 1)
-			return (printf("Invalid nbr of times each philosopher must eat."), 1);
+		if (ft_atoi(argv[5]) <= 0 || !is_valid_nbr(argv[5]))
+			return (1);
 		philos->nbr_of_meals = ft_atoi(argv[5]);
 	}
 	if (!argv[5])
