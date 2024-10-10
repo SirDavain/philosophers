@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 09:28:15 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/09 13:44:38 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/10 13:20:14 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,9 @@ void	quit_philos(char *str, t_data *data, pthread_mutex_t *forks)
 	pthread_mutex_destroy(&data->dead_lock);
 	pthread_mutex_destroy(&data->write_lock);
 	pthread_mutex_destroy(&data->meal_lock);
-	i = 0;
-	while (i < data->philos[0].nbr_of_philos)
-	{
+	i = -1;
+	while (++i < data->philos->nbr_of_philos)
 		pthread_mutex_destroy(&forks[i]);
-		i++;
-	}
 }
 
 void	print_status(char *str, t_philo *philo, int id)
@@ -78,6 +75,6 @@ void	print_status(char *str, t_philo *philo, int id)
 	pthread_mutex_lock(philo->write_lock);
 	time = get_current_time() - philo->start_time;
 	if (!death_flag_checker(philo))
-		printf("%zu %d %s \n", time, id, str);
+		printf("%zums %d %s \n", time, id, str);
 	pthread_mutex_unlock(philo->write_lock);
 }
