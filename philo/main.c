@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:33 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/09 14:56:57 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/09 17:36:59 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	philo_is_dead(t_philo *philo)
 		{
 			print_status("is dead", &philo[i], philo[i].id);
 			pthread_mutex_lock(philo->dead_lock);
-			*philo->is_dead = true;
+			*philo->is_dead = 1;
 			pthread_mutex_unlock(philo->dead_lock);
 			return (1);
 		}
@@ -45,6 +45,6 @@ int	main(int argc, char **argv)
 	create_philos(philos, &data, forks, argv);
 	if (create_threads(&data, forks) == 1)
 		return (quit_philos("Thread error", &data, forks), 1);
-	quit_philos("Everyone survived", &data, forks);
+	quit_philos("The meal is finished.", &data, forks);
 	return (0);
 }

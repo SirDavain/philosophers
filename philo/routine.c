@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 09:05:27 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/09 15:13:31 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/10 10:36:52 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*monitor_routine(void *ptr)
 	t_philo	*philos;
 
 	philos = (t_philo *)ptr;
-	while (true)
+	while (TRUE)
 	{
 		if (philo_is_dead(philos) || check_if_all_ate(philos))
 			break ;
@@ -32,9 +32,8 @@ void	*philo_routine(void *ptr)
 	philo = (t_philo *)ptr;
 	if (philo->id % 2 == 0)
 		ft_sleep(1);
-	while (!death_flag_checker(philo))
+	while (death_flag_checker(philo) == 0)
 	{
-		printf("ID: %d\n", philo->id);
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
@@ -44,7 +43,6 @@ void	*philo_routine(void *ptr)
 
 void	eating(t_philo *philos)
 {
-	printf("Eating\n");
 	pthread_mutex_lock(philos->r_fork);
 	print_status("took a fork", philos, philos->id);
 	if (philos->nbr_of_philos == 1)
@@ -55,14 +53,14 @@ void	eating(t_philo *philos)
 	}
 	pthread_mutex_lock(philos->l_fork);
 	print_status("took a fork", philos, philos->id);
-	philos->is_eating = true;
+	philos->is_eating = TRUE;
 	print_status("is eating", philos, philos->id);
 	pthread_mutex_lock(philos->meal_lock);
 	philos->meals_eaten++;
 	philos->last_meal = get_current_time();
 	pthread_mutex_unlock(philos->meal_lock);
 	ft_sleep(philos->time_to_eat);
-	philos->is_eating = false;
+	philos->is_eating = FALSE;
 	pthread_mutex_unlock(philos->r_fork);
 	pthread_mutex_unlock(philos->l_fork);
 }

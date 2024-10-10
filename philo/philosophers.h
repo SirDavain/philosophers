@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:42:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/09 14:30:25 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/10 10:36:43 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@
 # include <pthread.h>
 # include <string.h>
 # include <sys/time.h>
-# include <stdbool.h>
 # include <limits.h>
 
 # define MAX_PHILOS 200
+# define TRUE 1
+# define FALSE 0
 
 typedef struct s_philo
 {
-	bool			is_eating;
+	int				is_eating;
 	int				*is_dead;
 	int				id;
 	int				meals_eaten;
