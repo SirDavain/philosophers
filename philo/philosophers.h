@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:42:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/10/10 10:36:43 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/10/10 14:59:21 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ int		args_error(char **argv, t_philo *philos);
 
 //init.c
 int		create_threads(t_data *data, pthread_mutex_t *forks);
-void	ft_init(t_data *data, t_philo *philos, pthread_mutex_t *forks, char **argv);
-void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks, char **argv);
+void	ft_init(t_data *data, t_philo *philos, pthread_mutex_t *forks,
+			char **argv);
+void	create_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks,
+			char **argv);
 void	init_philo_input(t_philo *philos, char **argv);
 
 #endif
